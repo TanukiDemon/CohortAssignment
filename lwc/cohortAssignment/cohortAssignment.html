@@ -1,0 +1,98 @@
+<template >
+    <div class="c-container">
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="12">
+                    <div class="page-section page-header">
+                        <h2></h2>
+                        <c-path-type-with-iteration></c-path-type-with-iteration>
+                    </div>
+                    
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12">
+                    <lightning-layout>
+                        <lightning-layout-item padding="around-small" size="2">
+                            <div class="page-section page-right">
+                                <h2>Resources</h2>
+                                    <ul> 
+                                        <li><a href="#">How to Use This Tool</a></li> <br>
+                                        <li><a href="#">EA Intro Fellowship Resources</a></li> <br>
+                                        <li><a href="#">Insert Other Useful Link Here</a></li> <br>
+    
+                                    </ul>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small" size="9">
+                            <div class="page-section page-main">
+                                <!--<h2>Main</h2><br>--> <br>
+                                <!-- Start Step-1 HTML-->
+                                <template  if:false={leftFirstPage}>
+    
+                                    <h1>Welcome to the Cohort Assignment Tool!</h1>
+                                    <p>This tool generates cohorts for the EA Programs that you've already defined in the Groups CRM. For a Program to appear here, 
+                                        it has to have an "Upcoming" status value. To begin the process, select a program from the table below, and hit the "Next" button on the bottom-right of this page.</p><br>
+                                    <br>
+                                    <c-cat-program-datatable onprogramselected={handleProgramSelection}></c-cat-program-datatable> 
+                                </template>
+                                <!-- Start Step-2 HTML-->
+                                <template  if:true={secondPage} >
+                                    <h1>Facilitator Selection</h1>
+                                    <p>Select the facilitators you'd like to assign cohorts to from the table below.</p><br>
+                                    <c-cat-facilitator-datatable fid={programId}></c-cat-facilitator-datatable>
+     
+                                    <h1>Fellow Selection</h1>
+                                    <p>Select the fellows you'd like to make cohorts out of from the table below.</p><br>
+                                    <c-cat-fellows-datatable fid={programId}></c-cat-fellows-datatable> <br>
+                                </template>
+                               <!-- Start Step-3 HTML-->
+                               <template  if:true={thirdPage} >
+                                    <h1>Cohort Assignment Settings</h1>
+                                    <p>On this page you can set some of the constraints that will control your automated Cohort assignments.
+                                        One of those constraints is the maximum size of any given cohort. Our recommendation is to keep the max
+                                        size of a Cohort to about six or seven, but you can enter any number smaller than 15 below.
+                                    </p><br>
+                                    <lightning-input type="number" class="slds-size_1-of-12" name="cohortSizeInput" label="Max Size" value="6" onchange={handleSizeInputChange}></lightning-input><br><br>
+                                    <p>By default, this tool generates automated Cohorts by giving preference to Facilitators and Fellows with 
+                                        higher score values. It prioritizes these scores in this order: Promisingness Score > Interview Score > General
+                                        Excitement Level. If you'd like to prioritize matching meeting availability over score values, check the box below.
+                                    </p><br>
+                                    <lightning-input type="checkbox" label="Prioritize Availability Over Promisingness" name="input1"></lightning-input> <br><br>
+                                    <lightning-button variant="brand" label="Run Cohort Assignment" onclick={sendParticipants} class="slds-align_absolute-center"></lightning-button>
+    
+                                </template>
+    
+                                <!-- Start Step-4 HTML-->
+                                <template  if:true={fourthPage} >
+                                    <template if:false={cohortsLoaded}>
+                                            <!-- Listening for platform event -->
+                                            <c-cometdlwc oncohortprocessedevent={handleCohortProcessedEvent}></c-cometdlwc>
+                                            <!-- Loading spinner -->
+                                            <lightning-spinner alternative-text="Loading" size="large" class="slds-align_absolute-center"></lightning-spinner>
+
+                                    </template>
+                                    <template if:true={cohortsLoaded}>
+                                       <c-cohort-container containername='Cohorts' fid={programId}></c-cohort-container>
+                                       <c-unmatched-participant-list fid={programId} cohortname='Unmatched Participants'></c-unmatched-participant-list>
+                                    </template>
+                                </template>     
+    
+    
+                                <!-- Previous and Next Buttons--> 
+                                <lightning-button-group class="slds-float_right">
+                                    <lightning-button if:true={leftFirstPage} label="Previous" onclick={handlePrevClick}></lightning-button>
+                                    <lightning-button if:false={hideNextButton} variant="brand" label="Next" onclick={handleNextClick} ></lightning-button>
+                                </lightning-button-group> <br> <br><br>
+    
+    
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="around-small" size="12">
+                    <div class="page-footer page-section">
+                        <h2></h2>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </template>
+    

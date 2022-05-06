@@ -1,0 +1,13 @@
+<template>
+    <div style="height: 275px;">
+        <lightning-datatable
+                key-field="Id"
+                data={facilitators.data}
+                show-row-number-column
+                row-number-offset={rowOffset}
+                onsave={handleSave}
+                draft-values={saveDraftValues} 
+                columns={columns}>
+        </lightning-datatable>
+    </div>
+</template>

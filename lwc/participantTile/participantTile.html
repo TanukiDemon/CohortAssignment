@@ -1,0 +1,17 @@
+<template>
+	<lightning-card icon-name="utility:people" title={participant.Name} class="participant-tile" draggable="true" ondragstart={drag}>
+		<div class="slds-var-p-horizontal_small participant-tile-body">
+			<div class="slds-media">
+				<!-- <div class="slds-media__figure">
+					<img src={participantIconSrc} alt="participant icon" class="participant-silhouette"/>
+				</div> -->
+				<div class="slds-media__body">
+                    <p class="slds-var-m-bottom_xx-small">Participant Type: {participant.Participant_Type__c}</p>
+					<p class="slds-var-m-bottom_xx-small">Promisingness Score: {participant.Promisingness_Score__c}</p>
+					<p class="slds-var-m-bottom_xx-small">General Excitement Level: {participant.General_Excitement_Level__c}</p>
+					<p class="slds-var-m-bottom_xx-small">Interview Score: {participant.Interview_Score__c}</p>
+				</div>
+			</div>
+		</div>
+	</lightning-card>
+</template>

@@ -1,0 +1,15 @@
+<template>
+    <div style="height: 250px;">
+        <lightning-datatable
+                key-field="id"
+                data={programs.data}
+                show-row-number-column
+                row-number-offset={rowOffset}
+                suppress-bottom-bar
+                columns={columns}
+                onrowselection={handleRowSelection}
+                max-row-selection="1"
+                >
+        </lightning-datatable>
+    </div>
+</template>

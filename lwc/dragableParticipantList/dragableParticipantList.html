@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="Participants" icon-name="utility:animal_and_nature">
+        <div class="slds-card__body_inner">
+            <!-- Start participants list -->
+            <template if:true={participants.data}>
+                <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                    <template for:each={participants.data} for:item="participant">
+                        <lightning-layout-item key={participant.Id} size="4" class="slds-var-p-around_x-small">
+                            <c-participant-tile participant={participant}></c-participant-tile>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+                <!-- No participants found -->
+                <template if:false={hasResults}>
+                    <div class="slds-align_absolute-center slds-var-m-vertical_small">
+                        No more participants were found...
+                    </div>
+                </template>
+            </template>
+            <!-- End participants list -->
+            <!-- Data failed to load -->
+            <template if:true={participants.error}>
+                <div class="slds-text-color_error">
+                    An error occurred while loading the list
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

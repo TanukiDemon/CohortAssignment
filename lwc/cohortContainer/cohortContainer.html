@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="Cohorts" icon-name="utility:copy">
+        <div class="slds-card__body_inner">
+            <!-- Start participants list -->
+            <template if:true={cohorts.data}>
+                <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                    <template for:each={cohorts.data} for:item="cohort">
+                        <lightning-layout-item key={cohort.Id} size="9" class="slds-var-p-around_x-small slds-align_absolute-center">
+                            <c-cohort-participant-list cohortid={cohort.Id} cohortname={cohort.Name}></c-cohort-participant-list>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+                <!-- No participants found -->
+                <template if:false={hasResults}>
+                    <div class="slds-align_absolute-center slds-var-m-vertical_small">
+                       <!-- No more cohorts were found... -->
+                    </div>
+                </template>
+            </template>
+            <!-- End participants list -->
+            <!-- Data failed to load -->
+            <template if:true={cohorts.error}>
+                <div class="slds-text-color_error">
+                    <!-- An error occurred while loading the bear list-->
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
